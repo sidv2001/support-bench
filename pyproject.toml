@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "support-bench"
+version = "0.1.0"
+description = "A deterministic, synthetic multi-contact customer-support environment"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE"}
+authors = [{name = "Sidharth Vasudev"}]
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["supportbench*"]

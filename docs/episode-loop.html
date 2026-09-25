@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SupportBench — one case across contacts</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #18382e;
+        background: #f3f5ef;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      main { max-width: 74rem; margin: auto; padding: clamp(1.5rem, 5vw, 4.5rem); }
+      .eyebrow { font-size: .8rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+      h1 { max-width: 13ch; font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.1; margin: .6rem 0 1rem; }
+      .intro { max-width: 49rem; line-height: 1.65; font-size: 1.1rem; }
+      figure {
+        margin: 2.5rem 0 1rem;
+        padding: clamp(1rem, 3vw, 2rem);
+        border: 1px solid #7c9d88;
+        border-radius: 1.25rem;
+        background: #fffdf7;
+        box-shadow: 0 1.2rem 3rem #18382e12;
+      }
+      svg { display: block; width: 100%; height: auto; }
+      .node { fill: #e3f1e5; stroke: #28654e; stroke-width: 2; }
+      .node--human { fill: #fff0ce; stroke: #92600c; }
+      .node--result { fill: #e0edf1; stroke: #266277; }
+      .index { fill: #245d48; font-size: 15px; font-weight: 750; letter-spacing: 2px; }
+      .label { fill: #18382e; font-size: 17px; font-weight: 700; }
+      .detail { fill: #294d3f; font-size: 15px; }
+      .connector { stroke: #28654e; stroke-width: 3; fill: none; }
+      .return { stroke: #28654e; stroke-width: 3; stroke-dasharray: 8 7; fill: none; }
+      .return-label { fill: #245d48; font-size: 16px; font-weight: 700; }
+      .text-version { border-top: 1px solid #bdcfc0; padding-top: 1.2rem; }
+      h2 { font-size: 1.2rem; margin: 0 0 1rem; }
+      ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .8rem; padding-left: 1.4rem; }
+      li { padding: .25rem .7rem; line-height: 1.5; }
+      li::marker { color: #28654e; font-weight: 700; }
+      .continuation { font-weight: 700; }
+      figcaption { margin-top: 1.5rem; line-height: 1.55; color: #294d3f; }
+      nav { margin-top: 1.5rem; }
+      a { color: #115c43; text-underline-offset: .22em; }
+      a:focus-visible { outline: 3px solid #b36308; outline-offset: 4px; border-radius: 2px; }
+      @media (max-width: 42rem) {
+        svg { display: none; }
+        ol { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">SupportBench / episode loop</p>
+      <h1>One case. More than one visit.</h1>
+      <p class="intro">A fictional customer's earlier details and the case record
+        travel forward. The agent can act on the record or pass useful context to
+        a person; the scorer checks what actually changed.</p>
+
+      <figure aria-describedby="flow-caption">
+        <svg viewBox="0 0 1000 405" role="img" aria-labelledby="diagram-title diagram-desc">
+          <title id="diagram-title">SupportBench episode across return visits</title>
+          <desc id="diagram-desc">Five stages run from customer contact to agent
+            action, case tools, optional human handoff, and verified outcome.
+            A dashed arrow returns to the next contact, carrying customer
+            memory and the updated record.</desc>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4"
+              orient="auto" markerUnits="strokeWidth">
+              <path d="M1 1 L7 4 L1 7" fill="none" stroke="#28654e" stroke-width="1.8"/>
+            </marker>
+          </defs>
+          <path class="connector" d="M190 168 H208" marker-end="url(#arrow)"/>
+          <path class="connector" d="M384 168 H402" marker-end="url(#arrow)"/>
+          <path class="connector" d="M578 168 H596" marker-end="url(#arrow)"/>
+          <path class="connector" d="M772 168 H790" marker-end="url(#arrow)"/>
+          <g>
+            <rect class="node" x="22" y="86" width="168" height="164" rx="14"/>
+            <text class="index" x="39" y="116">01 / CONTACT</text>
+            <text class="label" x="39" y="151">Customer returns</text>
+            <text class="detail" x="39" y="181">Goal and past facts</text>
+            <text class="detail" x="39" y="204">stay with the case.</text>
+          </g>
+          <g>
+            <rect class="node" x="216" y="86" width="168" height="164" rx="14"/>
+            <text class="index" x="233" y="116">02 / AGENT</text>
+            <text class="label" x="233" y="151">Choose an action</text>
+            <text class="detail" x="233" y="181">Inspect, ask, or</text>
+            <text class="detail" x="233" y="204">respond.</text>
+          </g>
+          <g>
+            <rect class="node" x="410" y="86" width="168" height="164" rx="14"/>
+            <text class="index" x="427" y="116">03 / RECORDS</text>
+            <text class="label" x="427" y="151">Check the world</text>
+            <text class="detail" x="427" y="181">Guide and case</text>
+            <text class="detail" x="427" y="204">can be updated.</text>
+          </g>
+          <g>
+            <rect class="node node--human" x="604" y="86" width="168" height="164" rx="14"/>
+            <text class="index" x="621" y="116">04 / IF NEEDED</text>
+            <text class="label" x="621" y="151">Human handoff</text>
+            <text class="detail" x="621" y="181">Pass the reference</text>
+            <text class="detail" x="621" y="204">and earlier effort.</text>
+          </g>
+          <g>
+            <rect class="node node--result" x="798" y="86" width="180" height="164" rx="14"/>
+            <text class="index" x="815" y="116">05 / OUTCOME</text>
+            <text class="label" x="815" y="151">Verify the state</text>
+            <text class="detail" x="815" y="181">Resolution, burden,</text>
+            <text class="detail" x="815" y="204">time, and cost.</text>
+          </g>
+          <path class="return" d="M888 256 V312 Q888 338 862 338 H132 Q106 338 106 312 V258"
+            marker-end="url(#arrow)"/>
+          <text class="return-label" x="292" y="374">Next contact: memory and record carry forward</text>
+        </svg>
+        <section class="text-version" aria-labelledby="text-version-title">
+          <h2 id="text-version-title">Read the loop as text</h2>
+          <ol>
+            <li>A customer returns with a goal and remembered details.</li>
+            <li>The agent inspects, asks, updates, or responds.</li>
+            <li>The fictional guide and case record constrain changes.</li>
+            <li>If needed, a human receives the useful context and can act.</li>
+            <li>The oracle checks the record; the vector keeps costs and effort visible.</li>
+          </ol>
+          <p class="continuation">Next contact: the same customer's memory and
+            case record continue; a new episode starts fresh.</p>
+        </section>
+        <figcaption id="flow-caption">The handoff stage is optional. The return
+          arrow represents another contact in the same case, not another turn
+          in a single conversation. This is an illustration of the runnable
+          starter, not a chart of benchmark results.</figcaption>
+      </figure>
+      <nav aria-label="Related documentation">
+        <a href="../README.md">Project README</a> ·
+        <a href="scoring.md">Scoring contract</a>
+      </nav>
+    </main>
+  </body>
+</html>
